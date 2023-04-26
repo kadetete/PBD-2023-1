@@ -1,0 +1,8 @@
+-- Questão 2
+DELIMITER $$
+CREATE OR REPLACE FUNCTION fnAplicaDesconto(preco NUMERIC(9, 2), desconto NUMERIC(5, 2))
+RETURNS NUMERIC(9, 2) DETERMINISTIC
+BEGIN
+   RETURN preco * (1 - desconto / 100);
+END $$
+DELIMITER ;
