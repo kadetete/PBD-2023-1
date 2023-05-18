@@ -50,3 +50,18 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+-- Q04
+
+DELIMITER $$
+CREATE OR REPLACE PROCEDURE spEmprestimoListar(IN pDaEmprestimo DATE)
+BEGIN
+    SELECT e.IdEmprestimo, DaEmprestimo, IdOperador, NuMatricula, 
+    COUNT(ei.IdObra) AS qtdObras 
+    FROM tbemprestimo AS e
+    INNER JOIN tbemprestimoitem AS ei
+    ON ei.IdEmprestimo = e.IdEmprestimo
+    WHERE pDaEmprestimo = DaEmprestimo;
+END $$
+DELIMITER ;
