@@ -37,3 +37,16 @@ BEGIN
     END IF;
 END; $$
 DELIMITER ;
+
+-- Q3
+
+DELIMITER $$
+CREATE TRIGGER tgExcluiProduto
+AFTER DELETE ON tbpedido
+FOR EACH ROW
+BEGIN
+    INSERT INTO TbLog(DaOperacao, TxLog) VALUES
+    (NOW(), CONCAT('ID do pedido deletado:', OLD.CoPedido, '. Valor do pedido deletado:', OLD.VaPedido));
+END; $$
+DELIMITER ;
+
