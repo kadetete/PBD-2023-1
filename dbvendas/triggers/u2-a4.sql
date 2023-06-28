@@ -50,3 +50,20 @@ BEGIN
 END; $$
 DELIMITER ;
 
+-- Q4
+
+DELIMITER $$
+CREATE TRIGGER tgExcluiProduto
+AFTER UPDATE ON tbpedidoitem
+FOR EACH ROW
+BEGIN
+    DECLARE novoproduto VARCHAR(50);
+    DECLARE antigoproduto VARCHAR(50);
+    IF OLD.CoPedido != NEW.CoPedido THEN
+        SELECT NoPedido INTO antigoproduto FROM tbproduto WHERE CoPedido = OLD.CoPedido;
+        SELECT NoPedido INTO novoproduto FROM tbproduto WHERE CoPedido = NEW.CoPedido; 
+        INSERT INTO TbLog(DaOperacao, TxLog) VALUES
+        (NOW(), CONCAT('Produto excluído:', antigoproduto, '. Produto adicionado:', novoproduto));
+    END IF;
+END; $$
+DELIMITER ;
